@@ -1,0 +1,4 @@
+pycryptodome
+bitcoin
+mnemonic
+pynput
