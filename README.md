@@ -1,6 +1,6 @@
 # Randomness mixers
 
-For my key stretching scripts see the [Doubleslow](https://github.com/vstoykovbg/doubleslow) repository.
+For my key stretching scripts see the [Doubleslow](https://github.com/vstoykovbg/doubleslow) repository (the key stretching with the "seed extension" ("extension word") in the [BIP39 specification](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) is very weak, this is why I wrote the [Doubleslow](https://github.com/vstoykovbg/doubleslow) scripts).
 
 ## Simple script for creating BIP39 mnemonic
 
