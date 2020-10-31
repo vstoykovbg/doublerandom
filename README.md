@@ -2,6 +2,8 @@
 
 For my key stretching scripts see the [Doubleslow](https://github.com/vstoykovbg/doubleslow) repository (the key stretching with the "seed extension" (also known as "extension word" and "passphrase") in the [BIP39 specification](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) is very weak, this is why I wrote the [Doubleslow](https://github.com/vstoykovbg/doubleslow) scripts).
 
+Doublerandom is included in the [Cryptopup live distro](https://github.com/vstoykovbg/cryptopup).
+
 ## Simple script for creating BIP39 mnemonic
 
 The script `make-seed-simple.py` mixes the randomness from the OS (`/dev/random` or `os.urandom`) with the user's input (randomness from dice, coins, decks of cards, etc.).
