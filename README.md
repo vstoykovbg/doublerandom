@@ -22,13 +22,27 @@ There is usually noise at the microphone input even if there is no microphone at
 
 Of course, it works better with a microphone or a [noise generator](https://www.google.com/search?q=simple+noise+generator+circuit) attached to the microphone input.
 
-You need to boost the volume if the signal from the microphone is weak. You can check the signal level with apps like `pavucontrol` and `audacity`.
+You need to boost the volume if the signal from the microphone is weak. You can check the signal level with apps like `alsamixer`, `pavucontrol` and `audacity`.
 
-You can use these commands to boost the microphone input's volume:
+Also you can check if the noise level is good by redirecting the output from arecord to aplay:
+
+```
+$ arecord -d 5 | aplay
+```
+
+You shuold hear the noise from the microphone in your headphones or speakers connected to the sound output.
+
+You can use this command to boost the microphone input's volume:
 
 ```
 $ amixer sset 'Mic Boost' 100%
 $ amixer sset 'Mic' 100%
+```
+
+On some systems it may be different - 'Mic Boost (+20 dB)' instead of 'Mic Boost':
+
+```
+$ amixer sset 'Mic Boost (+20 dB)' 100%
 ```
 
 To "see" the noise you can use this command:
@@ -115,7 +129,6 @@ Recording raw data 'stdin' : Signed 16 bit Little Endian, Rate 44100 Hz, Stereo
 *
 002b110
 ```
-
 
 ## Randomness mixer: randomness from the sound input and the mouse
 
