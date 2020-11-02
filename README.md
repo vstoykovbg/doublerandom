@@ -32,11 +32,11 @@ $ arecord -d 5 | aplay
 
 You shuold hear the noise from the microphone in your headphones or speakers connected to the sound output.
 
-You can use this command to boost the microphone input's volume:
+You can use these commands to boost the microphone input's volume:
 
 ```
 $ amixer sset 'Mic Boost' 100%
-$ amixer sset 'Mic' 100%
+$ amixer sset 'Capture' 100%
 ```
 
 On some systems it may be different - 'Mic Boost (+20 dB)' instead of 'Mic Boost':
