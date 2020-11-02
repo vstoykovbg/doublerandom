@@ -45,6 +45,8 @@ On some systems it may be different - 'Mic Boost (+20 dB)' instead of 'Mic Boost
 $ amixer sset 'Mic Boost (+20 dB)' 100%
 ```
 
+The mixer `alsamixer` will show all available settings.
+
 To "see" the noise you can use this command:
 
 ```
