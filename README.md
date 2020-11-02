@@ -39,10 +39,10 @@ $ amixer sset 'Mic Boost' 100%
 $ amixer sset 'Capture' 100%
 ```
 
-On some systems it may be different - 'Mic Boost (+20 dB)' instead of 'Mic Boost':
+On some systems it may be different - `'Mic Boost (+20 dB)'` instead of `'Mic Boost'` and `on` instead of `100%`:
 
 ```
-$ amixer sset 'Mic Boost (+20 dB)' 100%
+$ amixer sset 'Mic Boost (+20dB)' on
 ```
 
 The mixer `alsamixer` will show all available settings.
