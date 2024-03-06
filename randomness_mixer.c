@@ -37,6 +37,13 @@ int main() {
     char c;
     struct timespec ts;
 
+    // Open /dev/random for reading
+    FILE *random_fp = fopen("/dev/random", "r");
+    if (random_fp == NULL) {
+        perror("Error opening /dev/random");
+        return 1;
+    }
+
     // Open the keys file for reading and appending
     fp = fopen(KEYS_FILE, "a");
     if (fp == NULL) {
@@ -90,23 +97,24 @@ int main() {
     // Close the keys file
     fclose(fp);
 
-    // Open /dev/random for reading
-    FILE *random_fp = fopen("/dev/random", "r");
-    if (random_fp == NULL) {
-        perror("Error opening /dev/random");
-        return 1;
-    }
 
+    unsigned char randomdata[hash_len];
+    
     // Read the same number of bytes as the hash from /dev/random and XOR it with the hash
-    size_t bytes_read = fread(hash, 1, hash_len, random_fp);
+    size_t bytes_read = fread(randomdata, 1, hash_len, random_fp);
     if (bytes_read != hash_len) {
         perror("Error reading from /dev/random");
         fclose(random_fp);
         return 1;
     }
+		
+	for (int i = 0; i < hash_len; i++) {
+	  hash[i] ^= randomdata[i]; // XOR hash[i] with randomdata[i] and store the result back in hash[i]
+	}
 
     // Close /dev/random
     fclose(random_fp);
+
 
     // Open the file for writing the mixed data
     fp = fopen(MIXED_FILE, "w");
@@ -124,6 +132,8 @@ int main() {
     fclose(fp);
 
     printf("Mixed data written to " MIXED_FILE "\n");
+
+    printf("\nWARNING! It's a proof of concept code, writes the pressed keys in a file in the current directory!");
 
     return 0;
 }
