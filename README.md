@@ -4,6 +4,18 @@ For my key stretching scripts see the [Doubleslow](https://github.com/vstoykovbg
 
 Doublerandom is included in the [Cryptopup live distro](https://github.com/vstoykovbg/cryptopup).
 
+## Warning about security
+
+* **Console History**: Many consoles retain a history, potentially including sensitive keys (input or read by the user). Even after manually clearing the history, there remains a possibility of recovery if the history is stored on a hard drive.
+* **Shoulder Surfing**: Someone looking over your shoulder could easily see the keys you're typing.
+* **Clipboard History**: Even if you copy and paste keys from a secure source, clipboard managers may also save a history of copied items to your disk. This history could potentially be accessed by malicious software or unauthorized users.
+* **Screen Sharing**: If you're sharing your screen remotely, the other person might inadvertently capture your keys.
+* **Malware**: Utilize an air-gapped computer. This way, if hypothetical malware exists, it will not be able to steal your secrets.
+
+These scripts are intended to be used in a secure environment where no one except you can see your screen. It's recommended to utilize a live Linux environment that doesn't retain information on non-volatile memory (outside of RAM). Even if you forget to disable clipboard history on Cryptopup, it's not a significant issue because, provided you do not use the session saving feature and do not use non-encrypted swap, any secrets in the clipboard manager are erased after you turn off the computer and wait several minutes. Additionally, you may run a memory testing app that overwrites data in RAM to protect against cold boot attacks.
+
+Hypothetically, there are methods by which one could attempt to intercept the radio waves emitted by a monitor to gain access to the information displayed on its screen. While these methods might be challenging and highly speculative, they can serve as potential avenues for sophisticated attackers.
+
 ## Simple script for creating BIP39 mnemonic
 
 The script `make-seed-simple.py` mixes the randomness from the OS (`/dev/random` or `os.urandom`) with the user's input (randomness from dice, coins, decks of cards, etc.).
@@ -178,3 +190,10 @@ To install `arecord` and `haveged`:
 $ sudo apt-get install alsa-utils haveged
 ```
 
+## randomness_mixer.c - Simple C program for mixing randomness from keystrokes with randomness from /dev/random
+
+This program captures the keys typed by the user along with the precise timing of each keystroke. Subsequently, it hashes the collected data, and the resulting hash is XOR-ed with random data obtained from /dev/random.
+
+To simplify memory management and keep the code straightforward, it writes the data of the pressed keys and timings to a file (named `keys_and_times.txt` in the current directory) instead of keeping this data in memory. The output is then saved in a file named random512.txt in hexadecimal format.
+
+To compile the program, execute the script `make_randomness_mixer.sh`.
