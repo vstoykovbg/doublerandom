@@ -131,9 +131,9 @@ int main() {
     // Close the file
     fclose(fp);
 
+    printf("\nWARNING! It's a proof of concept code, it writes the pressed keys in a file in the current directory!\n");
+    printf("\nKeys and timestamps are written in " KEYS_FILE "\n");
     printf("Mixed data written to " MIXED_FILE "\n");
-
-    printf("\nWARNING! It's a proof of concept code, writes the pressed keys in a file in the current directory!");
 
     return 0;
 }
