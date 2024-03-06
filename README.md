@@ -192,7 +192,7 @@ $ sudo apt-get install alsa-utils haveged
 
 ## randomness_mixer.c - Simple C program for mixing randomness from keystrokes with randomness from /dev/random
 
-This program captures the keys typed by the user along with the precise timing of each keystroke. Subsequently, it hashes the collected data, and the resulting hash is XOR-ed with random data obtained from /dev/random.
+This program captures the keys typed by the user along with the precise timing of each keystroke. Subsequently, it hashes the collected data, and the resulting hash is XOR-ed with random data obtained from `/dev/random`.
 
 To simplify memory management and keep the code straightforward, it writes the data of the pressed keys and timings to a file (named `keys_and_times.txt` in the current directory) instead of keeping this data in memory. The output is then saved in a file named random512.txt in hexadecimal format.
 
