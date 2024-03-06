@@ -33,6 +33,9 @@ char getch() {
 }
 
 int main() {
+
+    printf("\nWARNING! It's a proof of concept code, it writes the pressed keys in a file in the current directory!\n\n");
+	
     FILE *fp;
     char c;
     struct timespec ts;
