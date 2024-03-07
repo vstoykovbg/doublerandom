@@ -168,7 +168,9 @@ int main(int argc, char *argv[]) {
 
     // Simply overwriting data with zeros is not considered a secure practice
     // for erasing sensitive information in C. But it's probably better than nothing.
-    // I declared the variables as volatile to make a more likely overwriting them to work.
+    // I attempted to declare the important variables as volatile to increase the likelihood
+    // of overwriting them effectively. However, the code did not compile with this modification,
+    // so they are not declared as volatile.
 
     // Here is how simply overwriting data with zeros looks like:
 
