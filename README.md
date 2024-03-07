@@ -200,11 +200,11 @@ To compile the program, execute the script `make_randomness_mixer_poc.sh`.
 
 ## randomness_mixer.c - More advanced version of the above program
 
-This version uses memory allocation for the variable with random data from `/dev/random`. It does not write the keystrokes and timestamps in a file, instead it is supplying the data directly to the function handling the hashing at every step. A code for cleaning the memory is included, however this code does not guarantee that the data is completely erased.
+This version utilizes memory allocation for the variable, filling it with random data from `/dev/random`. Instead of writing keystrokes and timestamps to a file, it directly supplies the data to the function handling the hashing at each step. Additionally, it employs `explicit_bzero` for zeroing out certain variables in memory. Although the code includes this feature, it does not guarantee complete data erasure. I attempted to declare the important variables as `volatile` to increase the likelihood of overwriting them effectively. However, the code did not compile with this modification, so they are not declared as `volatile`.
 
-The program expects at least one argumeent (output file). There is optional argument `-s` for "silent mode" (the program is not displaying the timestamps and keys pressed on the monitor).
+The program expects at least one argument (output file). An optional argument `-s` activates "silent mode," where the program does not display timestamps and pressed keys on the monitor.
 
-If you need bigger than 512 bits of data you can run the program multiple times and make a bigger files with cat:
+If you require more than 512 bits of data, you can run the program multiple times and concatenate the outputs using `cat`:
 
 ```
 $ ./randomness_mixer output.512.1.txt
