@@ -196,7 +196,7 @@ This program captures the keys typed by the user along with the precise timing o
 
 To simplify memory management and keep the code straightforward, it writes the data of the pressed keys and timings to a file (named `keys_and_times.txt` in the current directory) instead of keeping this data in memory. The output is then saved in a file named random512.txt in hexadecimal format.
 
-To compile the program, execute the script `make_randomness_mixer.sh`.
+To compile the program, execute the script `make_randomness_mixer_poc.sh`.
 
 ## randomness_mixer.c - More advanced version of the above program
 
@@ -268,3 +268,4 @@ Here is the end of the program:
     return return_status;
 }
 ```
+To compile the program, execute the script `make_randomness_mixer.sh`.
