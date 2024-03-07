@@ -190,10 +190,81 @@ To install `arecord` and `haveged`:
 $ sudo apt-get install alsa-utils haveged
 ```
 
-## randomness_mixer.c - Simple C program for mixing randomness from keystrokes with randomness from /dev/random
+## randomness_mixer_poc.c - Simple C program for mixing randomness from keystrokes with randomness from /dev/random
 
 This program captures the keys typed by the user along with the precise timing of each keystroke. Subsequently, it hashes the collected data, and the resulting hash is XOR-ed with random data obtained from `/dev/random`.
 
 To simplify memory management and keep the code straightforward, it writes the data of the pressed keys and timings to a file (named `keys_and_times.txt` in the current directory) instead of keeping this data in memory. The output is then saved in a file named random512.txt in hexadecimal format.
 
 To compile the program, execute the script `make_randomness_mixer.sh`.
+
+## randomness_mixer.c - More advanced version of the above program
+
+This version uses memory allocation for the variable with random data from `/dev/random`. It does not write the keystrokes and timestamps in a file, instead it is supplying the data directly to the function handling the hashing at every step. A code for cleaning the memory is included, however this code does not guarantee that the data is completely erased.
+
+The program expects at least one argumeent (output file). There is optional argument `-s` for "silent mode" (the program is not displaying the timestamps and keys pressed on the monitor).
+
+If you need bigger than 512 bits of data you can run the program multiple times and make a bigger files with cat:
+
+```
+$ ./randomness_mixer output.512.1.txt
+$ ./randomness_mixer output.512.2.txt
+$ cat output.512.1.txt output.512.2.txt > data.1024.txt
+```
+I don't know why there is error message "Error freeing random_data: 2". 
+
+Here is the end of the program:
+
+```
+
+    // Trying to clean as much as possible data from RAM
+    
+    EVP_cleanup();
+
+    // Simply overwriting data with zeros is not considered a secure practice
+    // for erasing sensitive information in C. But it's probably better than nothing.
+    // I declared the variables as volatile to make a more likely overwriting them to work.
+
+    // Here is how simply overwriting data with zeros looks like:
+
+    // for (int i = 0; i < hash_len; i++) {
+    //    hash[i] = 0;
+    //    random_data[i] = 0;
+    // }
+    
+    // I commented out the simple zeoing because I use explicit_bzero below and I am not sure
+    // if the simple zeroing make it worse.
+
+
+    // I did not found memset_s on my Linux.
+
+    // int result = memset_s(random_data, sizeof(random_data), 0, sizeof(random_data));
+    // if (result != 0) {
+    //     fprintf(stderr, "Error filling random_data with zeroes: %d\n", result);
+    //     return_status=1;
+    // }
+
+
+    // explicit_bzero // Requires #include <string.h>
+    
+    // Purpose: Attempts to securely erase the contents of the random_data memory region 
+    //          to prevent potential sensitive data leakage.
+
+    // Functionality: Fills the specified memory with zeros, aiming to make it harder for
+    //                attackers to recover any information that was previously stored there.
+
+    // Availability: The explicit_bzero function might not be available on all systems or
+    //               compilers. Check your documentation for compatibility.
+
+    explicit_bzero(random_data, sizeof(random_data));
+    explicit_bzero(hash, sizeof(hash));
+   
+    free(random_data);
+    if (errno != 0) {
+      fprintf(stderr, "Error freeing random_data: %d\n", errno);
+      return_status=1;
+    }    
+
+    return return_status;
+}
+```
